@@ -65,7 +65,11 @@ class FetchData(object):
         self._twse = twse
         for i in range(month):
             nowdatetime = datetime.today() - relativedelta(months=i)
-            tolist = self.to_list(self.fetch_data(stock_no, nowdatetime))
+            try:
+                tolist = self.to_list(self.fetch_data(stock_no, nowdatetime))
+            except (IndexError, ValueError):
+                break
+
             result = tolist + result
         return tuple(result)
 
